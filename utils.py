@@ -1,4 +1,3 @@
-import argparse
 import json
 import os
 import re
@@ -9,7 +8,6 @@ import tensorflow as tf
 from tqdm import tqdm
 
 from encoder import get_encoder
-from model import gpt2
 
 
 def download_gpt2_files(model_size, model_dir):
@@ -23,7 +21,7 @@ def download_gpt2_files(model_size, model_dir):
         "model.ckpt.meta",
         "vocab.bpe",
     ]:
-        url = "https://openaipublic.blob.core.windows.net/gpt-2/models/"
+        url = "https://openaipublic.blob.core.windows.net/gpt-2/models"
         r = requests.get(f"{url}/{model_size}/{filename}", stream=True)
         r.raise_for_status()
 
@@ -67,65 +65,18 @@ def load_gpt2_params_from_tf_ckpt(tf_ckpt_path, hparams):
     return params
 
 
-def generate(ids, params, h, n_tokens_to_generate):
-    max_seq_len = params["wpe"].shape[0]
-    assert len(ids) + n_tokens_to_generate < max_seq_len
-
-    for _ in tqdm(range(n_tokens_to_generate), "generating"):
-        logits = gpt2(ids, **params, h=h)
-        next_id = np.argmax(logits[-1])
-        ids = np.append(ids, [next_id])
-
-    return list(ids[len(ids) - n_tokens_to_generate :])
-
-
-def main(prompt, models_dir, model_size, n_tokens_to_generate):
+def load_encoder_hparams_and_params(model_size, models_dir):
     assert model_size in ["124M", "355M", "774M", "1558M"]
 
     model_dir = os.path.join(models_dir, model_size)
-    if not os.path.isdir(model_dir):
-        os.makedirs(model_dir)
-        download_gpt2_files(model_size, model_dir)
     tf_ckpt_path = tf.train.latest_checkpoint(model_dir)
+    if not tf_ckpt_path:  # download files if necessary
+        os.makedirs(model_dir, exist_ok=True)
+        download_gpt2_files(model_size, model_dir)
+        tf_ckpt_path = tf.train.latest_checkpoint(model_dir)
 
-    with open(os.path.join(model_dir, "hparams.json")) as file:
-        hparams = json.load(file)
-
-    params = load_gpt2_params_from_tf_ckpt(tf_ckpt_path, hparams)
     encoder = get_encoder(model_size, models_dir)
-    input_ids = [encoder.encoder["<|endoftext|>"]] if prompt is None else encoder.encode(prompt)
-    output_ids = generate(input_ids, params, hparams["n_head"], n_tokens_to_generate)
-    output_text = encoder.decode(output_ids)
+    hparams = json.load(open(os.path.join(model_dir, "hparams.json")))
+    params = load_gpt2_params_from_tf_ckpt(tf_ckpt_path, hparams)
 
-    return output_text
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser("Generate text with GPT-2.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-        "--prompt",
-        type=str,
-        help="Input text to condition the outputs. If not set, we'll generate unconditioned (i.e. start with <|endoftext|> token).",
-        default=None,
-    )
-    parser.add_argument(
-        "--models_dir",
-        type=str,
-        default="models",
-        help="Base directory for the model directories.",
-    )
-    parser.add_argument(
-        "--model_size",
-        type=str,
-        default="124M",
-        help="Model size. Must be one of ['124M', '355M', '774M', '1558M']",
-    )
-    parser.add_argument(
-        "--n_tokens_to_generate",
-        type=int,
-        default=40,
-        help="Number of tokens to generate.",
-    )
-    args = parser.parse_args()
-
-    print(main(**args.__dict__))
+    return encoder, hparams, params

@@ -1,5 +1,6 @@
-numpy==1.24.1
-regex==2017.4.5 # used by bpe encoder
-requests==2.27.1 # used to download gpt-2 files
-tensorflow==2.11.0 # used to load the gpt-2 weights from the tf checkpoint into numpy
+numpy==1.24.1 # used for the actual model code/weights
+regex==2017.4.5 # used by the bpe tokenizer
+requests==2.27.1 # used to download gpt-2 files from openai
+tensorflow==2.11.0 # used to load the gpt-2 weights from the open-ai tf checkpoint
 tqdm==4.64.0 # progress bar to keep your sanity
+fire==0.5.0 # easy CLI creation
