@@ -1,4 +1,5 @@
 # PicoGPT
+
 You've seen [openai/gpt-2](https://github.com/openai/gpt-2).
 
 You've seen [karpathy/minGPT](https://github.com/karpathy/mingpt).
@@ -7,15 +8,22 @@ You've even seen [karpathy/nanoGPT](https://github.com/karpathy/nanogpt)!
 
 But have you seen [picoGPT](https://github.com/jaymody/picoGPT)??!?
 
-`picoGPT` is an unnecessarily tiny and minimal implementation of [GPT-2](https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) in plain [NumPy](https://numpy.org). The entire forward pass code is [40 lines of code](https://github.com/jaymody/picoGPT/blob/main/gpt2_pico.py#L3-L41).
+`picoGPT` is an unnecessarily tiny and minimal implementation of [GPT-2](https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) in plain [NumPy](https://numpy.org). The entire forward pass code is [40 lines of code](https://github.com/jaymody/picoGPT/blob/main/gpt2_pico.py#L3-L41). I wrote a related [blog post](https://jaykmody.com/blog/gpt-from-scratch/) for picoGPT.
 
-So is picoGPT:
+picoGPT features:
 * Fast? ❌ Nah, picoGPT is megaSLOW 🐌
 * Training code? ❌ Error, 4️⃣0️⃣4️⃣ not found
-* Batch inference? ❌ picoGPT is civilized, one at a time only, single file line
-* Support top-p? ❌ top-k? ❌ temperature? ❌ categorical sampling?! ❌ greedy? ✅
-* Readable? 🤔 Well actually, it's not too horrible on the eyes!
+* Batch inference? ❌ picoGPT is civilized, single file line, one at a time only
+* top-p sampling? ❌ top-k? ❌ temperature? ❌ categorical sampling?! ❌ greedy? ✅
+* Readable? `gpt2.py` ✅ `gpt2_pico.py` ❌
 * Smol??? ✅✅✅✅✅✅ YESS!!! TEENIE TINY in fact 🤏
+
+A quick breakdown of each of the files:
+
+* `encoder.py` contains the code for OpenAI's BPE Tokenizer, taken straight from their [gpt-2 repo](https://github.com/openai/gpt-2/blob/master/src/encoder.py).
+* `utils.py` contains the code to download and load the GPT-2 model weights, tokenizer, and hyper-parameters.
+* `gpt2.py` contains the actual GPT model and generation code which we can run as a python script.
+* `gpt2_pico.py` is the same as `gpt2.py`, but in even fewer lines of code. Why? Because why not 😎👍.
 
 #### Dependencies
 ```bash
@@ -48,5 +56,3 @@ python gpt2.py \
     --model_size "124M" \
     --models_dir "models"
 ```
-
-`gpt2_pico.py` is the same as `gpt2.py`, but has even fewer lines of code (removed comments, extra whitespace, and combined certain operations into a single line). Why? Because why not.
