@@ -89,9 +89,9 @@ def generate(inputs, params, n_head, n_tokens_to_generate):
     for _ in tqdm(range(n_tokens_to_generate), "generating"):  # auto-regressive decode loop
         logits = gpt2(inputs, **params, n_head=n_head)  # model forward pass
         next_id = np.argmax(logits[-1])  # greedy sampling
-        inputs = np.append(inputs, [next_id])  # append prediction to input
+        inputs.append(int(next_id))  # append prediction to input
 
-    return list(inputs[len(inputs) - n_tokens_to_generate :])  # only return generated ids
+    return inputs[len(inputs) - n_tokens_to_generate :]  # only return generated ids
 
 
 def main(prompt: str, n_tokens_to_generate: int = 40, model_size: str = "124M", models_dir: str = "models"):

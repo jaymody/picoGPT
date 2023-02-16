@@ -45,8 +45,8 @@ def generate(inputs, params, n_head, n_tokens_to_generate):
     for _ in tqdm(range(n_tokens_to_generate), "generating"):
         logits = gpt2(inputs, **params, n_head=n_head)
         next_id = np.argmax(logits[-1])
-        inputs = np.append(inputs, [next_id])
-    return list(inputs[len(inputs) - n_tokens_to_generate :])
+        inputs.append(int(next_id))
+    return inputs[len(inputs) - n_tokens_to_generate :]
 
 def main(prompt: str, n_tokens_to_generate: int = 40, model_size: str = "124M", models_dir: str = "models"):
     from utils import load_encoder_hparams_and_params
