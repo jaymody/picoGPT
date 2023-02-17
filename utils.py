@@ -49,11 +49,10 @@ def load_gpt2_params_from_tf_ckpt(tf_ckpt_path, hparams):
         d[keys[0]] = set_in_nested_dict(d[keys[0]], keys[1:], val)
         return d
 
-    init_vars = tf.train.list_variables(tf_ckpt_path)
     params = {"blocks": [{} for _ in range(hparams["n_layer"])]}
-    for name, _ in init_vars:
+    for name, _ in tf.train.list_variables(tf_ckpt_path):
         array = np.squeeze(tf.train.load_variable(tf_ckpt_path, name))
-        name = name.removeprefix("model/")
+        name = name[len("model/") :]
         if name.startswith("h"):
             m = re.match(r"h([0-9]+)/(.*)", name)
             n = int(m[1])

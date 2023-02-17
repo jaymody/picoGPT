@@ -29,9 +29,6 @@ A quick breakdown of each of the files:
 ```bash
 pip install -r requirements.txt
 ```
-
-If you're using an M1 Macbook, you'll need to replace `tensorflow` with `tensorflow-macos`.
-
 Tested on `Python 3.9.10`.
 
 #### Usage

@@ -24,7 +24,7 @@ def attention(q, k, v, mask):
 def mha(x, c_attn, c_proj, n_head):
     x = linear(x, **c_attn)
     qkv_heads = list(map(lambda x: np.split(x, n_head, axis=-1), np.split(x, 3, axis=-1)))
-    causal_mask = (1 - np.tri(x.shape[0], dtype=np.float32)) * -1e10
+    causal_mask = (1 - np.tri(x.shape[0], dtype=x.dtype)) * -1e10
     out_heads = [attention(q, k, v, causal_mask) for q, k, v in zip(*qkv_heads)]
     x = linear(np.hstack(out_heads), **c_proj)
     return x

@@ -1,6 +1,10 @@
 numpy==1.24.1 # used for the actual model code/weights
 regex==2017.4.5 # used by the bpe tokenizer
 requests==2.27.1 # used to download gpt-2 files from openai
-tensorflow==2.11.0 # used to load the gpt-2 weights from the open-ai tf checkpoint
 tqdm==4.64.0 # progress bar to keep your sanity
 fire==0.5.0 # easy CLI creation
+
+# used to load the gpt-2 weights from the open-ai tf checkpoint
+# M1 Macbooks require tensorflow-macos
+tensorflow==2.11.0; sys_platform != 'darwin' or platform_machine != 'arm64'
+tensorflow-macos==2.11.0; sys_platform == 'darwin' and platform_machine == 'arm64'
