@@ -72,7 +72,7 @@ def transformer_block(x, mlp, attn, ln_1, ln_2, n_head):  # [n_seq, n_embd] -> [
 
 def gpt2(inputs, wte, wpe, blocks, ln_f, n_head):  # [n_seq] -> [n_seq, n_vocab]
     # token + positional embeddings
-    x = wte[inputs] + wpe[range(len(inputs))]  # [n_seq] -> [n_seq, n_embd]
+    x = wte[np.array(inputs)] + wpe[np.array(range(len(inputs)))]  # [n_seq] -> [n_seq, n_embd]
 
     # forward pass through n_layer transformer blocks
     for block in blocks:
