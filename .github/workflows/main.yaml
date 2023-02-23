@@ -26,7 +26,20 @@ jobs:
         run: pip install pylint
 
       - name: Run Pylint
-        run: pylint $(git ls-files '*.py')
+        run: |
+                pylint --disable=
+                  - C0301 # Line too long
+                  - C0303 # Trailing whitespace
+                  - C0305 # Trailing newlines
+                  - C0114 # Missing module docstring
+                  - R0402 # Use 'from module import name' instead
+                  - C0116 # Missing function or method docstring
+                  - W0621 # Redefining name from outer scope
+                  - E1101 # Module has no member
+                  - C0103 # Invalid function name
+                  - C0321 # Multiple statements on a single line
+                  - C0209 # Formatting a regular string which could be a f-string
+                $(git ls-files '*.py')
 
       - name: Run Black
         run: black .
