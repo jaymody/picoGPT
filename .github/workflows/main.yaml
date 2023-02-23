@@ -37,23 +37,4 @@ jobs:
       - name: Set up CodeQL
         uses: github/codeql-action@v2
 
-      - name: Analyze code with CodeQL
-        uses: github/codeql-action/analyze@v1
-        with:
-          # Path to the codeQL database to analyze
-          database: codeql-database
 
-          # Path to the code to be analyzed
-          codeql: 'picoGPT'
-
-          # Additional CodeQL queries to run
-          queries: ./codeql-queries
-
-          # Output format for the CodeQL results
-          format: sarif-latest
-          
-      - name: Upload SARIF results
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          # Path to the SARIF file produced by the CodeQL analysis
-          sarif_file: codeql-database/results.sarif
