@@ -1,0 +1,55 @@
+name: Python Code Analysis
+
+on:
+  push:
+    branches: [ali_branch]
+  pull_request:
+    branches: [main]
+
+jobs:
+  code-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Pylint
+        run: pylint --rcfile=pylint.cfg .
+
+      - name: Run Black
+        run: black .
+
+      - name: Set up CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: python
+
+      - name: Analyze code with CodeQL
+        uses: github/codeql-action/analyze@v1
+        with:
+          # Path to the codeQL database to analyze
+          database: codeql-database
+
+          # Path to the code to be analyzed
+          codeql: 'picoGPT'
+
+          # Additional CodeQL queries to run
+          queries: ./codeql-queries
+
+          # Output format for the CodeQL results
+          format: sarif-latest
+          
+      - name: Upload SARIF results
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          # Path to the SARIF file produced by the CodeQL analysis
+          sarif_file: codeql-database/results.sarif
