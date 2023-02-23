@@ -35,9 +35,7 @@ jobs:
         run: black .
 
       - name: Set up CodeQL
-        uses: github/codeql-action/init@v1
-        with:
-          languages: python
+        uses: github/codeql-action@v2
 
       - name: Analyze code with CodeQL
         uses: github/codeql-action/analyze@v1
