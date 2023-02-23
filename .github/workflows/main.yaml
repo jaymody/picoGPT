@@ -4,7 +4,7 @@ on:
   push:
     branches: [ali_branch]
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   code-analysis:
