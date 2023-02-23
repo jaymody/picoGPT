@@ -33,19 +33,3 @@ jobs:
         
       - name: Run Black
         run: black .
-
-      - name: Set up CodeQL
-        uses: github/codeql-action@v2
-        with:
-          # Path to the CodeQL database
-          database-path: ${{github.workspace}}/codeql_database
-
-      - name: Build and test code
-        run: |
-          # Build and test code here
-
-      - name: Upload results
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          # Path to the SARIF file containing the results of the CodeQL analysis
-          sarif_file: codeql_database/codeql.sarif
