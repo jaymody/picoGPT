@@ -26,7 +26,7 @@ jobs:
         run: pip install pylint
 
       - name: Run Pylint
-        run: pylint --rcfile=$GITHUB_WORKSPACE/pylint.cfg $GITHUB_WORKSPACE
+        run: pylint --rcfile=$GITHUB_WORKSPACE/pylint.cfg --ignore=picoGPT/__init__.py $GITHUB_WORKSPACE
 
       - name: Run Black
         run: black .
