@@ -33,8 +33,3 @@ jobs:
         
       - name: Run Black
         run: black .
-
-      - name: Set up CodeQL
-        uses: github/codeql-action@v2
-
-
