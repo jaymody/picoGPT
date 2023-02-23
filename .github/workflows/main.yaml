@@ -21,6 +21,9 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+        
+      - name: Install pylint
+        run: pip install pylint
 
       - name: Run Pylint
         run: pylint --rcfile=pylint.cfg .
