@@ -1,4 +1,4 @@
-## Import numpy error
+## Import numpy
 import numpy as np
 
 
