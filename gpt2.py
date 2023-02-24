@@ -1,5 +1,5 @@
 ## Import numpy 
-## import nump
+## import numpy 
 import numpy as np
 
 
