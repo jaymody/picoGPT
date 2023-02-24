@@ -2,9 +2,9 @@ name: Python Code Analysis
 
 on:
   push:
-    branches: [ali_branch]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   code-analysis:
