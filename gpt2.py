@@ -1,5 +1,5 @@
 ## Import numpy 
-## Import wss
+## Import wss  as
 import numpy as np
 
 
