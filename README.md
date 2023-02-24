@@ -14,7 +14,7 @@ picoGPT features:
 * Fast? ❌ Nah, picoGPT is megaSLOW 🐌
 * Training code? ❌ Error, 4️⃣0️⃣4️⃣ not found
 * Batch inference? ❌ picoGPT is civilized, single file line, one at a time only
-* top-p sampling? ❌ top-k? ❌ temperature? ❌ categorical sampling?! ❌ greedy? ✅
+* top-p sampling? ❌ top-k? ❌ categorical sampling?! ❌ greedy? ✅
 * Readable? `gpt2.py` ✅ `gpt2_pico.py` ❌
 * Smol??? ✅✅✅✅✅✅ YESS!!! TEENIE TINY in fact 🤏
 
