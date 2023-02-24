@@ -85,7 +85,7 @@ def gpt2(inputs, wte, wpe, blocks, ln_f, n_head):  # [n_seq] -> [n_seq, n_vocab]
     return x @ wte.T  # [n_seq, n_embd] -> [n_seq, n_vocab]
 
 
-def generate(inputs, params, n_head, n_tokens_to_generate,temperature):
+def generate(inputs, params, n_head, n_tokens_to_generate,temperature = 1.0):
     from tqdm import tqdm
 
     for _ in tqdm(range(n_tokens_to_generate), "generating"):  # auto-regressive decode loop
