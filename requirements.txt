@@ -6,5 +6,5 @@ fire==0.5.0 # easy CLI creation
 
 # used to load the gpt-2 weights from the open-ai tf checkpoint
 # M1 Macbooks require tensorflow-macos
-tensorflow==2.11.0; sys_platform != 'darwin' or platform_machine != 'arm64'
-tensorflow-macos==2.11.0; sys_platform == 'darwin' and platform_machine == 'arm64'
+#tensorflow==2.11.0; sys_platform != 'darwin' or platform_machine != 'arm64'
+#tensorflow-macos==2.11.0; sys_platform == 'darwin' and platform_machine == 'arm64'

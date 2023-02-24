@@ -1,0 +1,35 @@
+name: Python Code Analysis
+
+on:
+  push:
+    branches: [ali_branch]
+  pull_request:
+    branches: [master]
+
+jobs:
+  code-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        
+      - name: Install pylint
+        run: pip install pylint
+
+      - name: Run Pylint
+        run: pylint --disable=all $(git ls-files '*.py')
+        
+      - name: Install black
+        run: pip install black
+        
+      - name: Run Black
+        run: black .
