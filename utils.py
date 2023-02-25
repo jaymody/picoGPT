@@ -33,6 +33,7 @@ def download_gpt2_files(model_size, model_dir):
                 desc="Fetching " + filename,
                 total=file_size,
                 unit_scale=True,
+                unit="b",
             ) as pbar:
                 # 1k for chunk_size, since Ethernet packet size is around 1500 bytes
                 for chunk in r.iter_content(chunk_size=chunk_size):
