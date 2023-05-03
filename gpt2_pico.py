@@ -35,7 +35,7 @@ def transformer_block(x, mlp, attn, ln_1, ln_2, n_head):
     return x
 
 def gpt2(inputs, wte, wpe, blocks, ln_f, n_head):
-    x = wte[inputs] + wpe[range(len(inputs))]
+    x = wte[np.array(inputs)] + wpe[np.array(range(len(inputs)))] 
     for block in blocks:
         x = transformer_block(x, **block, n_head=n_head)
     return layer_norm(x, **ln_f) @ wte.T
